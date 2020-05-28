@@ -14,45 +14,24 @@ class EnderecoDao{
   Future<Endereco> get(int idParceiro) async {
     var data = await http.get((Factory.internal().getUrl()+'parceiros/$idParceiro/endereco/'), headers: {'Accept': 'application/json'});
     var jsonData = json.decode(utf8.decode(data.bodyBytes));
-//  List<Endereco> enderecos = [];
 
-//    for (var p in jsonDataList) {
       Endereco endereco = Endereco.fromJson(jsonData[0]);
-//      enderecos.add(endereco);
-//      print(parceiro.situacao);
 
     return endereco;
   }
 
 //RETORNA A LISTA DE ENDEREÇOS DO CLIENTE A PARTIR DA PK DO MESMO.
 
-
-
   Future<List<Endereco>> list(int idCliente) async {
     var data = await http.get((Factory.internal().getUrl()+'cliente/$idCliente/enderecos/'), headers: {'Accept': 'application/json'});
     var jsonDataList = json.decode(utf8.decode(data.bodyBytes));
 
-//    print(jsonDataList);
     List<Endereco> enderecos = List();
 
     for (var jsonData in jsonDataList) {
       Endereco endereco = Endereco.fromJson(jsonData);
-//      endereco.id = data['id'];
-//      endereco.rua =  data['rua'];
-//      endereco.numero = data['numero'];
-//      endereco.bairro =  data['bairro'];
-//      endereco.cep = data['cep'];
-//      endereco.cidade = data['nomecidade'];
-//      endereco.referencia = data['referencia'];
-//      endereco.observacao = data['observacao'];
-//      endereco.idCidade = data['cidade'];
-
       enderecos.add(endereco);
     }
-
-//    for(Endereco e in enderecos){
-//      print(e.rua);
-//    }
 
     return enderecos;
   }
@@ -64,11 +43,6 @@ class EnderecoDao{
     List<EnderecoCliente> enderecos = List();
     for (var jsonData in jsonDataList) {
       EnderecoCliente enderecoCliente = EnderecoCliente.fromJson(jsonData);
-//      print(enderecoCliente.rua);
-//      print(enderecoCliente.id);
-//      print(enderecoCliente.idCliente);
-//      print(enderecoCliente.idCidade);
-//      print(enderecoCliente.nomeCidade);
       enderecos.add(enderecoCliente);
     }
 
@@ -76,7 +50,6 @@ class EnderecoDao{
   }
 
   Future<List<String>> novoEndereco({EnderecoCliente endereco}) async {
-    bool saida ;
     http.Client client = http.Client();
     var json2 =  json.encode(endereco);
 

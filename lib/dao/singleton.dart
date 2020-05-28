@@ -7,7 +7,7 @@ class Factory{
   factory Factory() => _instance;
   Factory.internal();
 
-  final String _ipDefault = 'http://192.168.1.3:8000';
+  final String _ipDefault = 'http://192.168.1.4:8000';
 //  final String _ipDefault = 'http://www.appfastdelivery.com';
 //  final String _ipDefault = 'http://908cdd6f.ngrok.io/';
 

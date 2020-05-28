@@ -68,7 +68,6 @@ class _EnderecoPageState extends State<EnderecoPage> {
         if (lista.length > _selects.length) {
           _selects.clear();
         }
-//        print('session - ${Session.getEnderecoCiente().rua}');
         for (int i = 0; i < lista.length; i++) {
           if(lista[i].id == Session.getEnderecoCiente().id){
             _selects.add(true);
@@ -95,12 +94,6 @@ class _EnderecoPageState extends State<EnderecoPage> {
       print('LOG[EnderecoPage]:  busca de endereços - finalizou');
     });
   }
-
-
-
-
-
-
 
   Future<List<EnderecoCliente>> _changeListEnderecosInFuture() async {
     Future<List<EnderecoCliente>> future = _enderecoDao.listEnderecosCliente(Session.getCliente().id);
@@ -531,9 +524,6 @@ class _EnderecoPageState extends State<EnderecoPage> {
                   }
               }
 
-
-
-
             })
 
 
@@ -550,49 +540,6 @@ class _EnderecoPageState extends State<EnderecoPage> {
             }
     return null;
   }
-
-//  Widget _verifyEnderecos() {
-////    print('tamanho: ${_enderecos.length}');
-//    if (_enderecos.isEmpty) {
-//      return Center(
-//        child: Column(
-//          children: <Widget>[
-//            SizedBox(height: 30.0),
-//            Text(
-//              'Sem endereços cadastrados',
-//              style: TextStyle(
-//                color: Configuration.colorRed,
-//              ),
-//            ),
-//            SizedBox(height: 30.0),
-//            Session.getCliente().id == 1070
-//                ? Container()
-//                :FlatButton(
-//              child: Text("Cadastrar novo endereço",
-//                  style: TextStyle(
-//                      color: Theme.of(context).accentColor,
-//                      fontSize: 14.0,
-//                      fontWeight: FontWeight.bold)),
-//              onPressed: () {
-//                Navigator.of(context)
-//                    .push(MaterialPageRoute(builder: (context) {
-//                  return EnderecoSearchPage(statusPage: false,);
-//                }));
-//              },
-//            ),
-//          ],
-//        ),
-//      );
-//    } else {
-//      return Expanded(
-//          child: ListView.builder(
-//        itemCount: _enderecos.length,
-//        itemBuilder: (BuildContext context, int index) {
-//          return _screenListTile(context, index);
-//        },
-//      ));
-//    }
-//  }
 
   Widget _screenListEnderecos(AsyncSnapshot snapshot) {
     if (snapshot.data.isEmpty) {
@@ -634,166 +581,6 @@ class _EnderecoPageState extends State<EnderecoPage> {
     }
   }
 
-//  Widget _screenListTile(BuildContext context, int index) {
-//    if (index == _enderecos.length - 1) {
-//      return Container(
-//          child: Column(
-//        children: <Widget>[
-//          Container(
-//            color: Theme.of(context).backgroundColor,
-//            child: Column(
-//              children: <Widget>[
-//                ListTile(
-//                    leading: Container(
-//                      width: 40.0,
-//                      height: 40.0,
-//                      alignment: Alignment.center,
-//                      child: Checkbox(
-//                          value: _selects[index],
-//                          onChanged: (value) {
-////                          print(index);
-//                            if (value != null) {
-////                                  print(_selects.length);
-//                              for (int i = 0; i < _selects.length; i++) {
-////                               print(i);
-//                                if (i == index) {
-//                                  setState(() {
-//                                    _selects[i] = value;
-//                                    if (_selects[i]) {
-////                                      _enderecoEscolhido = _enderecos[index];
-//                                    } else {
-//                                      _enderecoEscolhido = null;
-//                                    }
-//
-//                                    if (_enderecoEscolhido != null) {
-//                                      print(_enderecoEscolhido.rua);
-//                                    } else {
-//                                      print(_enderecoEscolhido);
-//                                    }
-//                                  });
-//                                } else {
-//                                  setState(() {
-//                                    _selects[i] = false;
-//                                    _enderecoEscolhido = null;
-//                                  });
-//                                }
-//                              }
-//                            }
-//                          }),
-//                    ),
-//                    title: Text(
-//                      '${_enderecos[index].rua}, ${_enderecos[index].numero}'
-//                                  ' \n${_enderecos[index].bairro}'
-//                              .toUpperCase() +
-//                          ' - ${_enderecos[index].referencia} - ' +
-//                          '${_enderecos[index].cidade}'.toUpperCase(),
-//                      style: TextStyle(fontSize: 11.0),
-//                    ),
-//                    trailing: Container(
-//                        padding: EdgeInsets.only(top: 10.0, bottom: 5.0),
-//                        child: Column(
-//                          children: <Widget>[
-//                            Text(
-//                              ''.replaceAll('.', ','),
-//                              style: TextStyle(fontSize: 11.0),
-//                            ),
-//                          ],
-//                        ))),
-//              ],
-//            ),
-//          ),
-//          Session.getCliente().id == 1070
-//              ? Container()
-//              : Container(
-//            child: FlatButton(
-//              child: Text("Cadastrar novo endereço",
-//                  style: TextStyle(
-//                      color: Theme.of(context).accentColor,
-//                      fontSize: 12.0,
-//                      fontWeight: FontWeight.bold)),
-//              onPressed: () {
-////                   _showModalBottomSheet(context);
-//                Navigator.of(context)
-//                    .push(MaterialPageRoute(builder: (context) {
-//                  return EnderecoSearchPage(statusPage: false,);
-//                }));
-//              },
-//            ),
-//          )
-//        ],
-//      ));
-//    } else {
-//      return Container(
-//          color: Theme.of(context).backgroundColor,
-//          child: Column(
-//            children: <Widget>[
-//              ListTile(
-//                  leading: Container(
-//                    width: 40.0,
-//                    height: 40.0,
-//                    alignment: Alignment.center,
-//                    child: Checkbox(
-//                        value: _selects[index],
-//                        onChanged: (value) {
-////                          print(index);
-//
-//                          if (value != null) {
-//                            for (int i = 0; i < _selects.length; i++) {
-////                               print(i);
-//                              if (i == index) {
-//                                setState(() {
-//                                  _selects[i] = value;
-//                                  if (_selects[i]) {
-////                                    _enderecoEscolhido = _enderecos[index];
-//                                  } else {
-//                                    _enderecoEscolhido = null;
-//                                  }
-//
-//                                  if (_enderecoEscolhido != null) {
-//                                    print(_enderecoEscolhido.rua);
-//                                  } else {
-//                                    print(_enderecoEscolhido);
-//                                  }
-//                                });
-//                              } else {
-//                                setState(() {
-//                                  _selects[i] = false;
-//                                });
-//                              }
-//                            }
-//                          }
-//                        }),
-//                  ),
-//                  title: Text(
-//                    '${_enderecos[index].rua}, ${_enderecos[index].numero}'
-//                                ' \n${_enderecos[index].bairro}'
-//                            .toUpperCase() +
-//                        ' - ${_enderecos[index].referencia} - ' +
-//                        '${_enderecos[index].cidade}'.toUpperCase(),
-//                    style: TextStyle(fontSize: 11.0),
-//                  ),
-//                  trailing: Container(
-//                      padding: EdgeInsets.only(top: 10.0, bottom: 5.0),
-//                      child: Column(
-//                        children: <Widget>[
-//                          Text(
-//                            ''.replaceAll('.', ','),
-//                            style: TextStyle(fontSize: 11.0),
-//                          ),
-//                        ],
-//                      ))),
-//              Divider(
-//                color: Configuration.colorWrite1,
-//                indent: 20.0,
-//                height: 20.0,
-//              ),
-//            ],
-//          ));
-//    }
-//  }
-
-
-
   Widget _screenListTile2(BuildContext context, AsyncSnapshot snapshot, int index) {
     if (index == snapshot.data.length - 1) {
       return Container(
@@ -811,11 +598,8 @@ class _EnderecoPageState extends State<EnderecoPage> {
                           child: Checkbox(
                               value: _selects[index],
                               onChanged: (value) {
-//                          print(index);
                                 if (value != null) {
-//                                  print(_selects.length);
                                   for (int i = 0; i < _selects.length; i++) {
-//                               print(i);
                                     if (i == index) {
                                       setState(() {
                                         _selects[i] = value;
