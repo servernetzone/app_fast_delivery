@@ -24,11 +24,13 @@ class JsonUtils {
 
     print('JsonUtils.novoPedido - request: ${json2}');
 
-    dynamic data = await client.post(
+    var data = await client.post(
         Factory.internal().getUrl() +"pedidos/novopedido/",
         headers: {"Content-Type": "application/json"},
         body: json2);
 
+    print('------------------- status code ${data.statusCode}');
+    print('------------------- body: ${data.body}');
 
     var jsondata = json.decode(utf8.decode(data.bodyBytes));
     String resposta = jsondata['resposta'];

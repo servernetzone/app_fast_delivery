@@ -11,10 +11,11 @@ import 'package:location/location.dart';
 import 'endereco_new_page.dart';
 
 class EnderecoSearchPage extends StatefulWidget {
-
   bool flag = false;
   bool statusPage = false;
+
   EnderecoSearchPage.internal(this.flag);
+
   EnderecoSearchPage({this.statusPage});
 
   @override
@@ -33,7 +34,6 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
   void initState() {
     super.initState();
     verificarStatusLocation();
-
   }
 
   @override
@@ -69,7 +69,7 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
                     fontWeight: FontWeight.bold),
               ),
               TextField(
-                onChanged: (value) {
+                onSubmitted: (value) {
                   buscarEnderecosPorNome(value).then((onValue) {
                     setState(() {
                       idEnderecos = onValue[0];
@@ -120,92 +120,53 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
         Cidade cidade = null;
         if (index != 0) {
           buscarEnderecoPorID(idEnderecos[index - 1]).then((endereco) {
-            print("entrou aki");
             print(endereco.cidade);
 
-            cidadeDao.get(endereco.cidade).whenComplete((){
-              print('iniciou');
-            }).then((city){
-              print('colocou cidade');
+            cidadeDao.get(endereco.cidade).whenComplete(() {}).then((city) {
               cidade = city;
-
-//
-            }).whenComplete((){
-              print('terminou');
-              if(cidade != null){
-//                if(endereco.cidade.toUpperCase() == cidade.descricao){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                    return EnderecoNewPage(endereco, cidade: cidade, statusPage: widget.statusPage,);
-                  }));
-//                }else{
-//                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-//                    return QuestionCidadePage(endereco);
-//                  }));
-//                }
-              }else{
-//                print("cidade é null");
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            }).whenComplete(() {
+              if (cidade != null) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return EnderecoNewPage(
+                    endereco,
+                    cidade: cidade,
+                    statusPage: widget.statusPage,
+                  );
+                }));
+              } else {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
                   return QuestionCidadePage(endereco);
                 }));
               }
             });
-            //Usar este endereço
           });
         } else {
           if (localizacao != null) {
             EnderecoPedido endereco = await buscarEnderecoPorID(localizacao[0]);
             print("agora entrou aki");
-//            print(endereco.cidade);
-            cidadeDao.get(endereco.cidade).whenComplete((){
+            cidadeDao.get(endereco.cidade).whenComplete(() {
               print('iniciou');
-            }).then((city){
-               cidade = city;
-
-//
-            }).whenComplete((){
+            }).then((city) {
+              cidade = city;
+            }).whenComplete(() {
               print('terminou');
-              if(cidade != null){
-                 if(endereco.cidade.toUpperCase() == cidade.descricao){
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                     return EnderecoNewPage(endereco, cidade: cidade, statusPage: widget.statusPage);
-                   }));
-                 }else{
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                     return QuestionCidadePage(endereco);
-                   }));
-                 }
-               }else{
-                 print("cidade é null");
-               }
+              if (cidade != null) {
+                if (endereco.cidade.toUpperCase() == cidade.descricao) {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return EnderecoNewPage(endereco,
+                        cidade: cidade, statusPage: widget.statusPage);
+                  }));
+                } else {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return QuestionCidadePage(endereco);
+                  }));
+                }
+              } else {}
             });
-
-//            FutureBuilder(
-//              future: cidadeDao.get(endereco.cidade),
-//              builder: (BuildContext context, AsyncSnapshot snapshot){
-//                if(snapshot.hasError){
-//                  return Container();
-//                }else{
-//                  cidade = snapshot.data;
-//                  if(cidade != null){
-//                    if(endereco.cidade.toUpperCase() == cidade.descricao){
-//                      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-//                        return EnderecoNewPage(endereco, cidade: cidade);
-//                      }));
-//                    }else{
-//                      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-//                        return QuestionCidadePage(endereco);
-//                      }));
-//                    }
-//                  }else{
-//                    print("cidade é null");
-//                  }
-//                  return Container();
-//                }
-//              },
-//            );
-
-
-
           } else {
             setState(() {
               localizacaoAtivada = true;
@@ -213,50 +174,8 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
             });
           }
         }
-
-//           return FutureBuilder<EnderecoPedido>(
-//            future: buscarEnderecoPorID(idEnderecos[index]  ),
-//            // ignore: missing_return
-//            builder: (BuildContext context, AsyncSnapshot snapshot) {
-//              switch(snapshot.connectionState){
-//                case ConnectionState.none:
-//                case ConnectionState.waiting:
-//                  print("Entrou no switch");
-//                  break;
-//                default:
-//                  if(snapshot.hasError){
-//                    print("Erro ao carregar");
-//                  }else{
-//                    print(snapshot.data);
-//                  }
-//              }
-//            },
-//          );
       },
-
-//        onTap:  (){
-//          EnderecoPedido enderecoPedido;
-//          buscarEnderecoPorID(idEnderecos[index]).then((endereco) {
-//            enderecoPedido = endereco;
-//            print(endereco);
-//            //Usar este endereço
-//          });
-//          Navigator.of(context).push(MaterialPageRoute(builder: (context){
-//            return EnderecoNewPage(enderecoPedido);
-//          }));
-//
-//        }
     );
-
-//              onTap: (){
-//                EnderecoPedido enderecoPedido = EnderecoPedido.instance();
-//                enderecoPedido.cidade = 'Patos';
-//                enderecoPedido.uf = 'pb';
-//                enderecoPe]
-//        }));
-//      },
-//    );
-////    }
   }
 
   getIcon(int index) {
@@ -277,8 +196,9 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
 
   getTitle(int index) {
     if (index == 0) {
-            return Text('Usar Minha Localização', style: TextStyle(fontSize: 13.0,color: Theme.of(context).accentColor));
-
+      return Text('Usar Minha Localização',
+          style:
+              TextStyle(fontSize: 13.0, color: Theme.of(context).accentColor));
     } else {
       return Text(
         enderecosFormatado[index - 1],
@@ -289,7 +209,6 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
 
   Widget getSubtitle(int index) {
     if (localizacaoAtivada && index == 0) {
-
       if (localizacao == null) {
         return FutureBuilder<List<String>>(
           future: buscarEnderecosPorLocalizacao(),
@@ -298,18 +217,15 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
               case ConnectionState.none:
               case ConnectionState.waiting:
                 return Center(
-                  child:Row(
+                  child: Row(
                     children: <Widget>[
                       Container(
                         width: 15.0,
                         height: 15.0,
                         alignment: Alignment.center,
-                        child:
-                        CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           valueColor:
-                          AlwaysStoppedAnimation<
-                              Color>(
-                              Colors.indigo),
+                              AlwaysStoppedAnimation<Color>(Colors.indigo),
                           strokeWidth: 2.0,
                         ),
                       ),
@@ -320,6 +236,7 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
               default:
                 if (snapshot.hasData) {
                   localizacao = snapshot.data;
+                  print(snapshot.data);
                   return Text(snapshot.data[1],
                       style: TextStyle(fontSize: 13.0));
                 } else
@@ -327,7 +244,7 @@ class _EnderecoSearchPageState extends State<EnderecoSearchPage> {
             }
           },
         );
-      }else{
+      } else {
         return Text(localizacao[1]);
       }
     } else {

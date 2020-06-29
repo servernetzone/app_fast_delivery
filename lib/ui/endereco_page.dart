@@ -19,16 +19,11 @@ class _EnderecoPageState extends State<EnderecoPage> {
   EnderecoDao _enderecoDao = EnderecoDao();
   BairroDao bairroDao;
 
-  bool _selected = false;
-//  int _length = 3;
   List<bool> _selects = List();
-  List<Endereco> _enderecos;
-  List<EnderecoPedido> _enderecosPedido;
   Endereco _enderecoParceiro = null;
   EnderecoCliente _enderecoEscolhido = null;
   Future<List<Bairro>> _futureListBairros;
   Future<Endereco> _futureEndereco;
-  Future<List<EnderecoCliente>> _futureListEnderecos;
 
 
   @override

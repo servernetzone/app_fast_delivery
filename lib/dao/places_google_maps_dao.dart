@@ -30,6 +30,7 @@ Future<List<String>> buscarEnderecosPorLocalizacao() async {
   PlacesSearchResponse retorno = await _places.searchNearbyWithRankBy(
       Location(currentLocation.latitude, currentLocation.longitude), "distance",
       type: 'route', language: 'pt-BR');
+
   List<String> lista = List<String>();
   lista.add(retorno.results[0].placeId);
   String endereco = await enderecoFormatado(retorno.results[0].placeId);
@@ -39,14 +40,14 @@ Future<List<String>> buscarEnderecosPorLocalizacao() async {
 
 Future<String> enderecoFormatado(String placeId) async {
   String endereco;
-  await _places.getDetailsByPlaceId(placeId, language: "pt-BR").then((det){
+  await _places.getDetailsByPlaceId(placeId, language: "pt-BR").then((det) {
     endereco = det.result.formattedAddress;
   });
   return endereco;
-
 }
 
 Future<EnderecoPedido> buscarEnderecoPorID(String id) async {
+  print('getDetailsByPlaceId');
   EnderecoPedido endereco = EnderecoPedido();
   final detalhes = _places.getDetailsByPlaceId(id, language: "pt-BR");
   await detalhes.then((det) {
