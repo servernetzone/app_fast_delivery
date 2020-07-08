@@ -17,9 +17,10 @@ class Parceiro {
  final double classificacao;
  final double porcentagemCartao;
  bool permitirRetirarEstabelecimento;
+ String url;
  
  Parceiro(this.id, this.nome, this.razaoSocial, this.imagemLogo, this.imagemBackground,
      this.situacao, this.estimativaEntrega, this.valoresEntrega, this.seguimento, this.descricao
-     ,this.abertura, this.fechamento, this.isCartao, this.classificacao, this.porcentagemCartao, this.permitirRetirarEstabelecimento);
+     ,this.abertura, this.fechamento, this.isCartao, this.classificacao, this.porcentagemCartao, this.permitirRetirarEstabelecimento, this.url);
 // );
 }

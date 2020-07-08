@@ -1,7 +1,4 @@
 
-
-
-
 class Avaliacao {
   int id;
   String descricao;

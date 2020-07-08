@@ -8,6 +8,7 @@ import 'package:appfastdelivery/ui/seguimento_page.dart';
 import 'package:appfastdelivery/ui/update_version_page.dart';
 import 'package:appfastdelivery/util/configuration.dart';
 import 'package:appfastdelivery/util/image_utils.dart';
+import 'package:appfastdelivery/util/message_util.dart';
 import 'package:appfastdelivery/util/session.dart';
 import 'package:flutter/material.dart';
 import 'package:get_version/get_version.dart';
@@ -19,6 +20,12 @@ import 'favoritos_page.dart';
 class HomePage extends StatefulWidget {
   static final String routeName = '/Home';
 
+  String path;
+
+  HomePage();
+
+  HomePage.path(this.path);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,7 +33,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   ParceiroDao parceiroDao = ParceiroDao();
   ClienteDao clienteDao = ClienteDao();
-  List<Parceiro> _todosParceiros;
+
+  String get path => widget.path;
 
   List<String> _listaNomes = [
     'Promoções',
@@ -98,15 +106,46 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     print("initState()");
+
     _futureParceiros = _initFutureParceiros();
 //    parceiroDao.list(Session.getEnderecoCiente().idCidade).then((retorno) {
 //      _todosParceiros = retorno;
 //    });
+
     verificarVersao();
   }
 
   Future<List<Parceiro>> _initFutureParceiros() async {
-    return await parceiroDao.list(Session.getEnderecoCiente().idCidade);
+    var parceiros =
+        await parceiroDao.list(Session.getEnderecoCiente().idCidade);
+    if (path != null) {
+      int id = int.parse(path.replaceAll('/', ''));
+      Parceiro parceiroLink;
+      parceiros.forEach((element) {
+        if (element.id == id) {
+          parceiroLink = element;
+        }
+      });
+      if (parceiroLink != null) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ParceiroPage(parceiroLink);
+        }));
+      }else{
+        MessageUtil.alertMessageScreen(context,
+            'Fast Delivery',
+            'O parceiro não está disponível na sua localidade',
+            [
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ]
+        );
+      }
+    }
+    return parceiros;
   }
 
   verificarVersao() {
