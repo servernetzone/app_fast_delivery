@@ -136,7 +136,11 @@ class ParceiroDao {
     var jsondata = json.decode(utf8.decode(data.bodyBytes));
 
     if (data.statusCode == 200) {
-      saida = jsondata[0]['isFavorito'];
+      try {
+        saida = jsondata[0]['isFavorito'];
+      } catch (erro) {
+        saida = false;
+      }
     } else {
       saida = false;
     }
