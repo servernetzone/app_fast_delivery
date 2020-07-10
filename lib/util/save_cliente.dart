@@ -20,10 +20,8 @@ class SaveCliente {
 
   read() async {
     File file = await cliente;
-//    print(file == null);
+
     String data = file.readAsStringSync();
-//    print('clientecelular');
-//    print('print ');
     return json.decode(data);
   }
 

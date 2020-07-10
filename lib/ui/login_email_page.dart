@@ -3,7 +3,6 @@ import 'package:appfastdelivery/helper/cliente.dart';
 import 'package:appfastdelivery/ui/cadastrar_cliente_page.dart';
 import 'package:appfastdelivery/ui/endereco_login_page.dart';
 import 'package:appfastdelivery/util/configuration.dart';
-import 'package:appfastdelivery/util/json_utils.dart';
 import 'package:appfastdelivery/util/message_util.dart';
 import 'package:appfastdelivery/util/session.dart';
 import 'package:flutter/material.dart';
