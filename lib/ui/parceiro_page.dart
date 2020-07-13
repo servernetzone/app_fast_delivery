@@ -58,11 +58,7 @@ class _ParceiroPageState extends State<ParceiroPage> {
     _parceiro = widget.parceiro;
 
     _idCliente = Session.getCliente().id;
-    isIpad().then((value) => {
-      setState((){
-        ipad = value;
-      })
-    });
+    verificarIpad();
 //    JsonUtils.isFavorito(idcliente: _idCliente, idparceiro: _parceiro.id)
 //        .then((isFavorito) {
 //      setState(() {
@@ -85,6 +81,13 @@ class _ParceiroPageState extends State<ParceiroPage> {
 
     categoriaDao.list(_parceiro.id);
     super.initState();
+  }
+
+  verificarIpad() async{
+    bool result = await isIpad();
+    setState(() {
+      ipad = result;
+    });
   }
 
   int _atualizarItensCarrinho() {
