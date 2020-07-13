@@ -52,6 +52,7 @@ dependencies:
   #  flutter_advanced_networkimage: ^0.4.13
   #  flutter_image: ^1.0.0
   get_version: ^0.1.0
+  device_info: ^0.4.2+4
 
 dev_dependencies:
   flutter_test:

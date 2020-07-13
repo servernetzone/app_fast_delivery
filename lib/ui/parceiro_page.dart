@@ -1,4 +1,5 @@
 import 'package:appfastdelivery/dao/parceiro_dao.dart';
+import 'package:appfastdelivery/util/device_utils.dart';
 import 'package:appfastdelivery/util/format_util.dart';
 import 'package:appfastdelivery/util/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -50,11 +51,18 @@ class _ParceiroPageState extends State<ParceiroPage> {
 
   List _listData = [];
 
+  bool ipad = true;
+
   @override
   void initState() {
     _parceiro = widget.parceiro;
 
     _idCliente = Session.getCliente().id;
+    isIpad().then((value) => {
+      setState((){
+        ipad = value;
+      })
+    });
 //    JsonUtils.isFavorito(idcliente: _idCliente, idparceiro: _parceiro.id)
 //        .then((isFavorito) {
 //      setState(() {
@@ -138,7 +146,7 @@ class _ParceiroPageState extends State<ParceiroPage> {
                   //              forceElevated: true,
                   snap: false,
                   actions: <Widget>[
-                    if (_parceiro.url != null)
+                    if (_parceiro.url != null && !ipad)
                       IconButton(
                         icon: Icon(Icons.share),
                         onPressed: () {
