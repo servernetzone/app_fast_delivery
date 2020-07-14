@@ -1,7 +1,9 @@
 import 'package:appfastdelivery/dao/cliente_dao.dart';
+import 'package:appfastdelivery/helper/parceiro.dart';
 import 'package:appfastdelivery/ui/cadastrar_cliente_page.dart';
 import 'package:appfastdelivery/ui/home_page.dart';
 import 'package:appfastdelivery/ui/login_page.dart';
+import 'package:appfastdelivery/ui/parceiro_page.dart';
 import 'package:appfastdelivery/util/configuration.dart';
 import 'package:appfastdelivery/util/message_util.dart';
 import 'package:appfastdelivery/util/session.dart';
@@ -9,6 +11,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+import 'dao/parceiro_dao.dart';
 import 'helper/cliente.dart';
 import 'helper/pedido.dart';
 import 'ui/endereco_login_page.dart';
@@ -82,14 +85,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _path;
 
-
   initDynamicLinks() async {
     print('initDynamicLinks');
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
 
     final Uri deeplink = data?.link;
-    
+
     if (deeplink != null) {
       setState(() {
         _path = deeplink.path;

@@ -1,9 +1,5 @@
-import 'package:appfastdelivery/dao/parceiro_dao.dart';
-import 'package:appfastdelivery/util/device_utils.dart';
-import 'package:appfastdelivery/util/format_util.dart';
-import 'package:appfastdelivery/util/image_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:appfastdelivery/dao/categoria_dao.dart';
+import 'package:appfastdelivery/dao/parceiro_dao.dart';
 import 'package:appfastdelivery/helper/categoria.dart';
 import 'package:appfastdelivery/helper/favorito.dart';
 import 'package:appfastdelivery/helper/parceiro.dart';
@@ -11,9 +7,11 @@ import 'package:appfastdelivery/ui/parceiro_info_page.dart';
 import 'package:appfastdelivery/ui/produto_page.dart';
 import 'package:appfastdelivery/ui/subcategoria_page.dart';
 import 'package:appfastdelivery/util/configuration.dart';
-import 'package:appfastdelivery/util/json_utils.dart';
+import 'package:appfastdelivery/util/format_util.dart';
+import 'package:appfastdelivery/util/image_utils.dart';
 import 'package:appfastdelivery/util/session.dart';
-import 'package:share/share.dart';
+import 'package:flutter/material.dart';
+import 'package:share_it/share_it.dart';
 
 import 'carrinho_page.dart';
 
@@ -51,14 +49,12 @@ class _ParceiroPageState extends State<ParceiroPage> {
 
   List _listData = [];
 
-  bool ipad = true;
 
   @override
   void initState() {
     _parceiro = widget.parceiro;
 
     _idCliente = Session.getCliente().id;
-    verificarIpad();
 //    JsonUtils.isFavorito(idcliente: _idCliente, idparceiro: _parceiro.id)
 //        .then((isFavorito) {
 //      setState(() {
@@ -83,12 +79,6 @@ class _ParceiroPageState extends State<ParceiroPage> {
     super.initState();
   }
 
-  verificarIpad() async{
-    bool result = await isIpad();
-    setState(() {
-      ipad = result;
-    });
-  }
 
   int _atualizarItensCarrinho() {
     Session.getCarrinho(Session.getIdParceiro()).then((itens) {
@@ -149,11 +139,14 @@ class _ParceiroPageState extends State<ParceiroPage> {
                   //              forceElevated: true,
                   snap: false,
                   actions: <Widget>[
-                    if (_parceiro.url != null && !ipad)
+                    if (_parceiro.url != null)
                       IconButton(
                         icon: Icon(Icons.share),
                         onPressed: () {
-                          Share.share(_parceiro.url);
+                          ShareIt.link(
+                              url: _parceiro.url,
+                              androidSheetTitle: 'Compartilhar parceiro'
+                          );
                         },
                       ),
                     IconButton(
