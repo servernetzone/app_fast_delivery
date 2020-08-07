@@ -1,6 +1,5 @@
 import 'package:appfastdelivery/dao/cliente_dao.dart';
 import 'package:appfastdelivery/helper/cliente.dart';
-import 'package:appfastdelivery/helper/pedido.dart';
 import 'package:appfastdelivery/ui/login_email_page.dart';
 import 'package:appfastdelivery/util/message_util.dart';
 import 'package:appfastdelivery/util/session.dart';
@@ -25,30 +24,24 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var _phoneController = MaskedTextController(mask: '(00) 00000-0000');
-  final _focusCodigo = FocusNode();
 
   String phoneNumber;
   String codeSms;
   String verificationId;
   String errorMessage = '';
   FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<Endereco> _futureEndereco;
   String _projectVersion;
   final _numberVisitant = '+5500000000000';
   bool active = true;
 
   initState() {
     super.initState();
-//    _futureEndereco = initFutureEnderecoCliente();
     GetVersion.projectVersion.whenComplete(() {
-//      print("LOG[LoginPage] - GetVersion: iniciou");
     }).then((version) {
       setState(() {
         this._projectVersion = version;
       });
-//      print("LOG[LoginPage] - GetVersion: versão do projeto: $version");
     }).whenComplete(() {
-//      print("LOG[LoginPage] - GetVersion: finalizou");
     });
   }
 
@@ -205,9 +198,6 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 15.0,
                       ),
-//                          widget.isVisitant == 'visitante'
-//                              ? Container()
-//                              :
                       Container(
                         width: MediaQuery.of(context).size.width - 40,
                         height: 50.0,
@@ -362,6 +352,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 85.0,
                   child: Column(children: [
                     TextField(
+                      keyboardType: TextInputType.number,
                       autofocus: true,
                       onChanged: (value) {
                         this.codeSms = value;
@@ -552,16 +543,10 @@ class _LoginPageState extends State<LoginPage> {
           Session.setCliente(cliente);
         });
 
-//          JsonUtils.atualizarCliente(cliente: Session.getCliente()).then((client){
-//            if(client != null){
-//              client.id = cliente.id;
-//              Session.setCliente(client);
-//              print('LoginEmailPage._verificarCadastro - Session.getCliente2(): ${Session.getCliente().id} - ${Session.getCliente().nome}');
-//            }
-//          });
       } else {
         Session.setCliente(cliente);
       }
+      print('here');
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) {
           return EnderecoLoginPage();

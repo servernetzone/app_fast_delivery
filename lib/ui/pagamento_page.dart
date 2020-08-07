@@ -24,10 +24,7 @@ class _PagamentoPageState extends State<PagamentoPage> {
   double _valorTaxa;
 
   var _valorTrocoController = MoneyMaskedTextController(
-      precision: 2,
-      decimalSeparator: ',',
-      initialValue: 0,
-      leftSymbol: 'R\$ ');
+      precision: 2, decimalSeparator: ',', initialValue: 0, leftSymbol: 'R\$ ');
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -654,10 +651,11 @@ class _PagamentoPageState extends State<PagamentoPage> {
                                     ),
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
-
                                         _formasPagamentoPedido =
                                             FormasPagamentoPedido(
-                                                formaPagamento.id, _valorTrocoController.numberValue);
+                                                formaPagamento.id,
+                                                _valorTrocoController
+                                                    .numberValue);
                                         Session.getPedido().valorPagoCliente =
                                             _valorTrocoController.numberValue;
                                         Session.setFormaPagamento(

@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'package:appfastdelivery/helper/cliente.dart';
+import 'package:appfastdelivery/util/prefs.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SaveCliente {
@@ -13,20 +14,32 @@ class SaveCliente {
     File file = File(dir.path + "/cliente.json");
 
     if (!file.existsSync()) {
-      file.writeAsString(json.encode(varCliente));
+      file.writeAsString(convert.json.encode(varCliente));
     }
     return file;
   }
 
   read() async {
-    File file = await cliente;
+    String json = await Prefs.getString('cliente.prefs');
+    if (json.isEmpty) {
+      return null;
+    }
+    return convert.json.decode(json);
+//    File file = await cliente;
+//
+//    String data = file.readAsStringSync();
+//    return convert.json.decode(data);
+  }
 
-    String data = file.readAsStringSync();
-    return json.decode(data);
+  void clear() {
+    Prefs.setString('cliente.prefs', '');
   }
 
   save(data) async {
-    File file = await cliente;
-    return file.writeAsString(json.encode(data));
+    String json = convert.json.encode(data);
+
+    Prefs.setString('cliente.prefs', json);
+//    File file = await cliente;
+//    return file.writeAsString(json.encode(data));
   }
 }

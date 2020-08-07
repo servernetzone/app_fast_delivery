@@ -64,10 +64,28 @@
 @import share_it;
 #endif
 
+#if __has_include(<shared_preferences/FLTSharedPreferencesPlugin.h>)
+#import <shared_preferences/FLTSharedPreferencesPlugin.h>
+#else
+@import shared_preferences;
+#endif
+
+#if __has_include(<simple_connectivity/FLTConnectivityPlugin.h>)
+#import <simple_connectivity/FLTConnectivityPlugin.h>
+#else
+@import simple_connectivity;
+#endif
+
 #if __has_include(<sqflite/SqflitePlugin.h>)
 #import <sqflite/SqflitePlugin.h>
 #else
 @import sqflite;
+#endif
+
+#if __has_include(<statusbar/StatusbarPlugin.h>)
+#import <statusbar/StatusbarPlugin.h>
+#else
+@import statusbar;
 #endif
 
 #if __has_include(<url_launcher/FLTURLLauncherPlugin.h>)
@@ -89,7 +107,10 @@
   [FLTPackageInfoPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [ShareItPlugin registerWithRegistrar:[registry registrarForPlugin:@"ShareItPlugin"]];
+  [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
+  [FLTConnectivityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTConnectivityPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
+  [StatusbarPlugin registerWithRegistrar:[registry registrarForPlugin:@"StatusbarPlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
 }
 

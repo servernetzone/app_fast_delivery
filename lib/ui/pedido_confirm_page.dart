@@ -26,20 +26,20 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
   TextEditingController _ticketController = TextEditingController();
   FocusNode _focus = FocusNode();
 
-
   @override
   void initState() {
     _valorItens = _calcularValorTotal();
-    if((Session.getFormaPagamento().tipo.toUpperCase() == 'CREDITO' || Session.getFormaPagamento().tipo.toUpperCase() == 'DEBITO') && Session.getParceiro().porcentagemCartao != 0.0){
-      _valorTaxa = _valorItens * (Session.getParceiro().porcentagemCartao/100);
+    if ((Session.getFormaPagamento().tipo.toUpperCase() == 'CREDITO' ||
+            Session.getFormaPagamento().tipo.toUpperCase() == 'DEBITO') &&
+        Session.getParceiro().porcentagemCartao != 0.0) {
+      _valorTaxa =
+          _valorItens * (Session.getParceiro().porcentagemCartao / 100);
 //      _valorItens = _valorTaxa + _valorItens;
     }
     print(_valorItens);
     print(Session.getPedido().valorEntrega);
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,8 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                         fontSize: 13.0),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
+                    padding: EdgeInsets.only(
+                        left: 10.0, right: 10.0, top: 7.0, bottom: 7.0),
                     child: Text(
                       '${Session.getPedido().endereco.rua}, ${Session.getPedido().endereco.numero}'
                               .toUpperCase() +
@@ -154,52 +155,66 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: Session.getFormaPagamento().tipo == 'saldo' ? AssetImage(Session.getFormaPagamento().imagem) :ImageUtil.loadWithRetry(
-                                    Session.getFormaPagamento().imagem))),
+                                image: Session.getFormaPagamento().tipo ==
+                                        'saldo'
+                                    ? AssetImage(
+                                        Session.getFormaPagamento().imagem)
+                                    : ImageUtil.loadWithRetry(
+                                        Session.getFormaPagamento().imagem))),
                       ),
                     ],
                   ),
                   SizedBox(height: 7.0),
-                  Session.getFormaPagamento().tipo.toUpperCase() == 'CREDITO' ||  Session.getFormaPagamento().tipo.toUpperCase() == 'DEBITO'
-                      ?
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Taxa aplicada',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 12.5
+                  Session.getFormaPagamento().tipo.toUpperCase() == 'CREDITO' ||
+                          Session.getFormaPagamento().tipo.toUpperCase() ==
+                              'DEBITO'
+                      ? Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Taxa aplicada',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12.5),
+                                ),
+                                Text(
+                                  FormatUtil.adicionaMascaraProcentagem(
+                                      Session.getParceiro().porcentagemCartao,
+                                      decimal: 1),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12.5),
+                                ),
+                              ],
                             ),
-                          ),
-                          Text(FormatUtil.adicionaMascaraProcentagem(Session.getParceiro().porcentagemCartao, decimal: 1),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 12.5
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Valor aplicado',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12.5),
+                                ),
+                                Text(
+                                  FormatUtil.adicionaMascaraDinheiro(
+                                      FormatUtil.doubleToPrice(_valorTaxa)),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12.5),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Valor aplicado',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 12.5
-                            ),
-                          ),
-                          Text(FormatUtil.adicionaMascaraDinheiro(FormatUtil.doubleToPrice(_valorTaxa)),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 12.5
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ): Container(),
+                          ],
+                        )
+                      : Container(),
                   SizedBox(height: 7.0),
 
 //              TOTAIS
-                  Text('TOTAIS',
+                  Text(
+                    'TOTAIS',
                     style: TextStyle(
                         color: Configuration.colorAccent1,
                         fontWeight: FontWeight.bold,
@@ -218,7 +233,9 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                               style: TextStyle(fontSize: 13.0),
                             ),
                             Text(
-                              FormatUtil.adicionaMascaraDinheiro(FormatUtil.doubleToPrice(_valorItens+_valorTaxa)),
+                              FormatUtil.adicionaMascaraDinheiro(
+                                  FormatUtil.doubleToPrice(
+                                      _valorItens + _valorTaxa)),
                               style: TextStyle(
                                   color: Configuration.colorAccent1,
                                   fontSize: 13.0),
@@ -251,7 +268,10 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                                   fontWeight: FontWeight.bold, fontSize: 13.0),
                             ),
                             Text(
-                              FormatUtil.adicionaMascaraDinheiro(FormatUtil.doubleToPrice(((_valorItens+_valorTaxa) + Session.getPedido().valorEntrega))),
+                              FormatUtil.adicionaMascaraDinheiro(
+                                  FormatUtil.doubleToPrice(
+                                      ((_valorItens + _valorTaxa) +
+                                          Session.getPedido().valorEntrega))),
                               style: TextStyle(
                                   color: Theme.of(context).accentColor,
                                   fontWeight: FontWeight.bold,
@@ -427,7 +447,7 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
 
                   Container(
                       padding:
-                      EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                          EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -467,7 +487,7 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
 //                                    fontSize: 14.0),
                                   alignLabelWithHint: true,
                                   hintText:
-                                  'Alguma observação para o pedido, entrega, etc...',
+                                      'Alguma observação para o pedido, entrega, etc...',
                                   hintStyle: TextStyle(fontSize: 13.0)),
                             ),
                           ),
@@ -476,7 +496,8 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                             child: TextField(
                               controller: _ticketController,
                               maxLines: 1,
-                              enabled: Session.getFormaPagamento().tipo != 'saldo',
+                              enabled:
+                                  Session.getFormaPagamento().tipo != 'saldo',
                               style: TextStyle(fontSize: 16.0),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(15.0),
@@ -488,154 +509,205 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color:  Theme.of(context).accentColor,
+                                      color: Theme.of(context).accentColor,
                                     ),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color:  Theme.of(context).accentColor,
+                                      color: Theme.of(context).accentColor,
                                     ),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-
-                                labelText: 'Ticket:',
-                                labelStyle: TextStyle(
-                                    color: Colors.indigo,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.0),
+                                  labelText: 'Ticket:',
+                                  labelStyle: TextStyle(
+                                      color: Colors.indigo,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.0),
                                   alignLabelWithHint: true,
                                   hintText: 'Informe o código do ticket',
                                   hintStyle: TextStyle(fontSize: 15.0)),
                             ),
                           ),
-
                           Padding(
                             padding: EdgeInsets.only(bottom: 6.0),
                             child: RaisedButton(
                                 child: Text("Confirmar pedido",
                                     style: TextStyle(
                                         color:
-                                        Theme.of(context).backgroundColor,
+                                            Theme.of(context).backgroundColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.0)),
-                                padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                                padding:
+                                    EdgeInsets.only(top: 15.0, bottom: 15.0),
                                 onPressed: active
                                     ? () {
-                                  setState(() {
-                                    active = false;
-                                  });
-                                  Session.getPedido().valor = FormatUtil.fixedValueDouble(_valorItens);
-                                  Session.getPedido().parceiro = Session.getIdParceiro();
-                                  Session.getPedido().cliente = Session.getCliente().id;
-                                  Session.getPedido().observacao = _observacaoController.text.isNotEmpty == true
-                                      ? _observacaoController.text : '';
-                                  Session.getPedido().itens.clear();
-                                  Session.getPedido().ticket = _ticketController.text;
-                                  for (ItemCarrinho itemCarrinho in Session.getListaItens()) {
-                                    ItemPedido itemPedido = ItemPedido(
-                                        itemCarrinho.idProduto,
-                                        itemCarrinho.quantidade,
-                                        itemCarrinho.valor,
-                                        'situação',
-                                        itemCarrinho.observacao.isEmpty == true
-                                            ? 'Sem observações' : itemCarrinho.observacao,
-                                        _montarObjetoEscolhaAdicional(itemCarrinho.adicionaisEscolhidos)
-                                    );
-                                    Session.getPedido().itens.add(itemPedido);
-                                  }
+                                        setState(() {
+                                          active = false;
+                                        });
+                                        Session.getPedido().valor =
+                                            FormatUtil.fixedValueDouble(
+                                                _valorItens);
+                                        Session.getPedido().parceiro =
+                                            Session.getIdParceiro();
+                                        Session.getPedido().cliente =
+                                            Session.getCliente().id;
+                                        Session.getPedido().observacao =
+                                            _observacaoController
+                                                        .text.isNotEmpty ==
+                                                    true
+                                                ? _observacaoController.text
+                                                : '';
+                                        Session.getPedido().itens.clear();
+                                        Session.getPedido().ticket =
+                                            _ticketController.text;
+                                        for (ItemCarrinho itemCarrinho
+                                            in Session.getListaItens()) {
+                                          ItemPedido itemPedido = ItemPedido(
+                                              itemCarrinho.idProduto,
+                                              itemCarrinho.quantidade,
+                                              itemCarrinho.valor,
+                                              'situação',
+                                              itemCarrinho.observacao.isEmpty ==
+                                                      true
+                                                  ? 'Sem observações'
+                                                  : itemCarrinho.observacao,
+                                              _montarObjetoEscolhaAdicional(
+                                                  itemCarrinho
+                                                      .adicionaisEscolhidos));
+                                          Session.getPedido()
+                                              .itens
+                                              .add(itemPedido);
+                                        }
 
-                                  JsonUtils.novoPedido(pedido: Session.getPedido()).then((lista) {
-                                    List<Widget> actions = List<Widget>();
-                                    actions.add(
-                                        FlatButton(
-                                            child: Text('OK'),
-                                            onPressed: () {
-                                              if (lista[1] == 'SALVO') {
-                                                Session.setListaItens(List());
-                                                Session.getPersistence().save(
-                                                    List(),
-                                                    Session.getIdParceiro());
-                                                Session.setPedido(Pedido
-                                                    .instance()); // modificado aki
-//                                             Navigator.of(context).popUntil(ModalRoute.withName(HomePage.routeName));
-//                                             Navigator.of(context).push(MaterialPageRoute(builder: (context){
-//                                               return PedidosPage();
-//                                             }));
+                                        JsonUtils.novoPedido(
+                                                pedido: Session.getPedido())
+                                            .then((lista) {
+                                          List<Widget> actions = List<Widget>();
+                                          actions.add(FlatButton(
+                                              child: Text('OK'),
+                                              onPressed: () {
+                                                if (lista[1] == 'SALVO') {
+                                                  Session.setListaItens(List());
+                                                  Session.getPersistence().save(
+                                                      List(),
+                                                      Session.getIdParceiro());
+                                                  Session.setPedido(Pedido
+                                                      .instance());
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                      return HomePage(goToPedidosPage: true);
+                                                    }),
+                                                    (routes) => false,
+                                                  );
+                                                } else {
+                                                  Navigator.of(context).pop();
+                                                  setState(() {
+                                                    active = true;
+                                                  });
+                                                }
+                                              }));
 
-                                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
-                                                  return HomePage();
-                                                }),
-                                                  ModalRoute.withName(HomePage.routeName),
-                                                );
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                                  return PedidosPage();
-                                                }));
-                                              } else {
-                                                Navigator.of(context).pop();
-                                                setState(() {
-                                                  active = true;
-                                                });
-                                              }
-                                            }));
+                                          MessageUtil.alertMessageScreen(
+                                              context,
+                                              lista[0],
+                                              lista[1] == 'SALVO'
+                                                  ? 'Verifique o andamento na lista de pedidos realizados.'
+                                                  : lista[1],
+                                              actions);
+                                        });
+                                        print(
+                                            '=================================================================');
+                                        print(
+                                            '======================== PEDIDO =================================');
+                                        print(
+                                            'porcentagemCartao: ${Session.getPedido().porcentagemCartao}\n');
+                                        print(
+                                            'ticket: ${Session.getPedido().ticket}\n');
+                                        print(
+                                            'valor (valor dos itens sem valorEntrega): ${Session.getPedido().valor}');
+                                        print(
+                                            'tipo : ${Session.getPedido().tipo}');
+                                        print(
+                                            'situacao: ${Session.getPedido().situacao}');
+                                        print(
+                                            'status: ${Session.getPedido().status}');
+                                        print(
+                                            'entrega: ${Session.getPedido().entrega}');
+                                        print(
+                                            'observacao: ${Session.getPedido().observacao}');
+                                        print(
+                                            'idParceiro: ${Session.getPedido().parceiro}');
+                                        print(
+                                            '======================== Endereço =========================================');
+                                        print(
+                                            'Endereco: ${Session.getPedido().endereco}');
+                                        print(
+                                            'rua: ${Session.getPedido().endereco.rua}');
+                                        print(
+                                            'numero: ${Session.getPedido().endereco.numero}');
+                                        print(
+                                            'bairro: ${Session.getPedido().endereco.bairro}');
+                                        print(
+                                            'cep: ${Session.getPedido().endereco.cep}');
+                                        print(
+                                            'referencia: ${Session.getPedido().endereco.referencia}');
+                                        print(
+                                            'observacao: ${Session.getPedido().endereco.observacao}');
+                                        print(
+                                            'cidade: ${Session.getPedido().endereco.cidade}');
+                                        print(
+                                            'idCidade: ${Session.getPedido().endereco.idCidade}');
+                                        print(
+                                            'idCliente do endereco: ${Session.getPedido().endereco.idCliente}');
+                                        print(
+                                            '=================================================================');
+                                        print(
+                                            'idCliente: ${Session.getPedido().cliente}');
+                                        print(
+                                            'valorPagoCliente (entrega+valor): ${Session.getPedido().valorPagoCliente}');
+                                        print(
+                                            'valorEntrega: ${Session.getPedido().valorEntrega}');
+                                        print(
+                                            '============================  Pagamento ==========================');
+                                        if (Session.getPedido()
+                                                .pagamentosPedido !=
+                                            null) {
+                                          print(
+                                              'pagamentosPedido: [id] ${Session.getPedido().pagamentosPedido[0].formaPagamento}');
+                                          print(
+                                              'valor: [entrega+valor] ${Session.getPedido().pagamentosPedido[0].valor}');
+                                        } else {
+                                          print(
+                                              'pagamentosPedido: ${Session.getPedido().pagamentosPedido}');
+                                          print(
+                                              'pagoComSaldo: ${Session.getPedido().pagoComSaldo}');
+                                        }
+                                        print(
+                                            '========================= Carrinho ==============================');
 
-                                    MessageUtil.alertMessageScreen(
-                                        context,
-                                        lista[0],
-                                        lista[1] == 'SALVO'
-                                            ? 'Verifique o andamento na lista de pedidos realizados.'
-                                            : lista[1],
-                                        actions);
-                                  });
-                                  print('=================================================================');
-                                  print('======================== PEDIDO =================================');
-                                  print('porcentagemCartao: ${Session.getPedido().porcentagemCartao}\n');
-                                  print('ticket: ${Session.getPedido().ticket}\n');
-                                  print('valor (valor dos itens sem valorEntrega): ${Session.getPedido().valor}');
-                                  print('tipo : ${Session.getPedido().tipo}');
-                                  print('situacao: ${Session.getPedido().situacao}');
-                                  print('status: ${Session.getPedido().status}');
-                                  print('entrega: ${Session.getPedido().entrega}');
-                                  print('observacao: ${Session.getPedido().observacao}');
-                                  print('idParceiro: ${Session.getPedido().parceiro}');
-                                  print('======================== Endereço =========================================');
-                                  print('Endereco: ${Session.getPedido().endereco}');
-                                  print('rua: ${Session.getPedido().endereco.rua}');
-                                  print('numero: ${Session.getPedido().endereco.numero}');
-                                  print('bairro: ${Session.getPedido().endereco.bairro}');
-                                  print('cep: ${Session.getPedido().endereco.cep}');
-                                  print('referencia: ${Session.getPedido().endereco.referencia}');
-                                  print('observacao: ${Session.getPedido().endereco.observacao}');
-                                  print('cidade: ${Session.getPedido().endereco.cidade}');
-                                  print('idCidade: ${Session.getPedido().endereco.idCidade}');
-                                  print('idCliente do endereco: ${Session.getPedido().endereco.idCliente}');
-                                  print('=================================================================');
-                                  print('idCliente: ${Session.getPedido().cliente}');
-                                  print('valorPagoCliente (entrega+valor): ${Session.getPedido().valorPagoCliente}');
-                                  print('valorEntrega: ${Session.getPedido().valorEntrega}');
-                                  print('============================  Pagamento ==========================');
-                                  if(Session.getPedido().pagamentosPedido != null){
-                                    print('pagamentosPedido: [id] ${Session.getPedido().pagamentosPedido[0].formaPagamento}');
-                                    print('valor: [entrega+valor] ${Session.getPedido().pagamentosPedido[0].valor}');
-                                  }else{
-                                    print('pagamentosPedido: ${Session.getPedido().pagamentosPedido}');
-                                    print('pagoComSaldo: ${Session.getPedido().pagoComSaldo}');
-                                  }
-                                  print('========================= Carrinho ==============================');
-
-                                  for (ItemPedido itemPedido in Session.getPedido().itens) {
-                                    print('idproduto: ${itemPedido.produto}');
-                                    print('quantidade: ${itemPedido.quantidade}');
-                                    print('valorItem: ${itemPedido.valorPedido}');
-                                    print('situacao: ${itemPedido.situacao}');
-                                    print('observacao: ${itemPedido.observacao}');
-                                    for (EscolhaAdicional escolhaAdicional in itemPedido.adicionais) {
-                                      print('pkadicional ${escolhaAdicional.pkdoadicional}');
-                                    }
-                                  }
-                                }
-                                    : null
-                            ),
+                                        for (ItemPedido itemPedido
+                                            in Session.getPedido().itens) {
+                                          print(
+                                              'idproduto: ${itemPedido.produto}');
+                                          print(
+                                              'quantidade: ${itemPedido.quantidade}');
+                                          print(
+                                              'valorItem: ${itemPedido.valorPedido}');
+                                          print(
+                                              'situacao: ${itemPedido.situacao}');
+                                          print(
+                                              'observacao: ${itemPedido.observacao}');
+                                          for (EscolhaAdicional escolhaAdicional
+                                              in itemPedido.adicionais) {
+                                            print(
+                                                'pkadicional ${escolhaAdicional.pkdoadicional}');
+                                          }
+                                        }
+                                      }
+                                    : null),
                           ),
                           Padding(
                             padding: EdgeInsets.only(bottom: 30.0),
@@ -646,15 +718,15 @@ class _PedidoConfirmPageState extends State<PedidoConfirmPage> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.0)),
                                 borderSide:
-                                BorderSide(color: Configuration.colorRed),
+                                    BorderSide(color: Configuration.colorRed),
                                 padding:
-                                EdgeInsets.only(top: 15.0, bottom: 15.0),
+                                    EdgeInsets.only(top: 15.0, bottom: 15.0),
                                 onPressed: () {
                                   Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context) {
-                                        return CarrinhoPage(
-                                            Session.getListaItens());
-                                      }));
+                                    return CarrinhoPage(
+                                        Session.getListaItens());
+                                  }));
                                 }),
                           ),
                         ],

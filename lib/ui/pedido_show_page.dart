@@ -540,20 +540,6 @@ class _PedidoShowPageState extends State<PedidoShowPage> {
                     activeField = text.length > 0;
                   });
                 },
-//                onTap: (){
-//                  print('onTap');
-//                },
-//                onSaved: (value){
-//                  print('onSaved');
-//                },
-
-//                validator: (value){
-//                  String text = null;
-//                  if(value.isEmpty){
-//                    text = "Digite uma mensagem!";
-//                  }
-//                  return text;
-//                },
               ),
               SizedBox(height: 10.0,),
               SizedBox(

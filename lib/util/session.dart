@@ -23,10 +23,11 @@ abstract class Session {
   static Pedido _pedido = null;
   static FormaPagamento _formaPagamento;
 
-  static void setParceiro(Parceiro parceiro){
+  static void setParceiro(Parceiro parceiro) {
     _parceiro = parceiro;
   }
-  static Parceiro getParceiro(){
+
+  static Parceiro getParceiro() {
     return _parceiro;
   }
 
@@ -46,6 +47,7 @@ abstract class Session {
   static int getIdParceiro() {
     return _idParceiro;
   }
+
   static void setIdParceiro(int id) {
     _idParceiro = id;
     if (_persistence == null) {
@@ -64,15 +66,15 @@ abstract class Session {
     });
   }
 
-
-  static void setFormaPagamento(FormaPagamento formaPagamento){
+  static void setFormaPagamento(FormaPagamento formaPagamento) {
     _formaPagamento = formaPagamento;
   }
-  static FormaPagamento getFormaPagamento(){
+
+  static FormaPagamento getFormaPagamento() {
     return _formaPagamento;
   }
 
-  static void setPedido(Pedido pedido){
+  static void setPedido(Pedido pedido) {
     _pedido = pedido;
     _pedido.tipo = 'tipo';
     _pedido.situacao = 'situacao';
@@ -81,8 +83,9 @@ abstract class Session {
     _pedido.itens = List<ItemPedido>();
     _pedido.valorEntrega = 0.00;
   }
-  static Pedido getPedido(){
-    if(_pedido == null){
+
+  static Pedido getPedido() {
+    if (_pedido == null) {
       _pedido = Pedido.instance();
       _pedido.tipo = 'tipo';
       _pedido.situacao = 'situacao';
@@ -94,21 +97,13 @@ abstract class Session {
     return _pedido;
   }
 
-
-
-
-
-  static void setToken(String token){
+  static void setToken(String token) {
     _token = token;
   }
-  static String getToken(){
+
+  static String getToken() {
     return _token;
   }
-
-
-
-
-
 
   static SaveLocal getPersistence() {
     if (_persistence == null) {
@@ -117,14 +112,13 @@ abstract class Session {
     return _persistence;
   }
 
-
   static List<ItemCarrinho> getListaItens() {
     return _listaItens;
   }
+
   static void setListaItens(List<ItemCarrinho> itens) {
     _listaItens = itens;
   }
-
 
   static Future<List<ItemCarrinho>> getCarrinho(int idParceiro) async {
     if (_persistence == null) {
@@ -159,37 +153,51 @@ abstract class Session {
       return _cliente;
     }
   }
+
+  static Future<Cliente> getCliente2() async {
+    if (_cliente == null) {
+      SaveCliente persistence = SaveCliente();
+      var read = await persistence.read();
+      _cliente = Cliente.fromJson(read);
+    }
+    return _cliente;
+  }
+
   static void setCliente(Cliente client) {
     _cliente = client;
     SaveCliente persistence = SaveCliente();
     persistence.save(_cliente);
   }
+
   static void clearCliente() {
     _cliente = null;
     SaveCliente persistence = SaveCliente();
     persistence.save(_cliente);
   }
 
+  static void logout() {
+    SaveCliente persistence = SaveCliente();
+    persistence.clear();
+  }
 
   static Endereco getEnderecoCiente() {
     return _enderecoCliente;
   }
 
-  static Future<Endereco> getEnderecoCienteInFuture() async{
-    if(_enderecoCliente == null){
+  static Future<Endereco> getEnderecoCienteInFuture() async {
+    if (_enderecoCliente == null) {
       Endereco endereco;
       var dados;
       SaveEndereco persistence = SaveEndereco();
-      await persistence.readData().then((value){
+      await persistence.readData().then((value) {
         dados = json.decode(value);
-      }).whenComplete((){
+      }).whenComplete(() {
 //        print(dados);
-        if(dados.toString() != '[]'){
+        if (dados.toString() != '[]') {
           endereco = Endereco.fromJson(dados);
           _enderecoCliente = endereco;
         }
       });
-
     }
     return _enderecoCliente;
   }
@@ -209,5 +217,4 @@ abstract class Session {
   static void setEnderecoCiente(Endereco endereco) {
     _enderecoCliente = endereco;
   }
-
 }

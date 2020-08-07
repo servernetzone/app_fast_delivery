@@ -335,7 +335,7 @@ class _EnderecoPageState extends State<EnderecoPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Qual envio prefere?',
+                      'Onde entregar?',
                       style: TextStyle(
                           color: Theme.of(context).accentColor, fontSize: 15.0),
                     ),
@@ -548,20 +548,7 @@ class _EnderecoPageState extends State<EnderecoPage> {
                 color: Configuration.colorRed,
               ),
             ),
-            SizedBox(height: 30.0),
-             FlatButton(
-              child: Text("Cadastrar novo endereço",
-                  style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold)),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return EnderecoSearchPage(statusPage: false,);
-                }));
-              },
-            ),
+
           ],
         ),
       );

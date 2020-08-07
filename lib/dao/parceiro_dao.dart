@@ -156,7 +156,6 @@ class ParceiroDao {
         headers: {"Content-Type": "application/json"},
         body: json.encode(favorito));
 
-//    var jsondata = json.decode(utf8.decode(data.bodyBytes));
     if (data.statusCode == 201) {
       saida = true;
     } else {

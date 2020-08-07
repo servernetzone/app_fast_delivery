@@ -3,20 +3,18 @@ import 'package:appfastdelivery/helper/resumopedido.dart';
 import 'package:appfastdelivery/util/configuration.dart';
 import 'package:appfastdelivery/util/image_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:appfastdelivery/util/json_utils.dart';
 import 'package:appfastdelivery/util/session.dart';
 
-import 'cliente_page.dart';
 import 'pedido_show_page.dart';
-import 'favoritos_page.dart';
-import 'home_page.dart';
 
 class PedidosPage extends StatefulWidget {
+  PedidosPage({PageStorageKey<String> key}):super(key:key);
   @override
   _PedidosPageState createState() => _PedidosPageState();
 }
 
-class _PedidosPageState extends State<PedidosPage> {
+class _PedidosPageState extends State<PedidosPage> with AutomaticKeepAliveClientMixin<PedidosPage>{
+  bool get wantKeepAlive => true;
   int _idCliente;
 
   Future<List<ResumoPedido>> _futurePedidos;
@@ -25,7 +23,7 @@ class _PedidosPageState extends State<PedidosPage> {
   void initState() {
     super.initState();
     _idCliente = Session.getCliente().id;
-    _futurePedidos = _initFutureParceirosFavoritos();
+    _futurePedidos = _initFuturePedidos();
     _atualiza();
   }
 
@@ -33,51 +31,36 @@ class _PedidosPageState extends State<PedidosPage> {
     await Future.delayed(Duration(seconds: 45));
     if (mounted) {
       setState(() {
-        _futurePedidos = _initFutureParceirosFavoritos();
+        _futurePedidos = _initFuturePedidos();
       });
     }
     _atualiza();
   }
 
-  Future<List<ResumoPedido>> _initFutureParceirosFavoritos() async {
+  Future<List<ResumoPedido>> _initFuturePedidos() async {
     return await PedidoDao.internal().list(_idCliente);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Meus Pedidos",
-          style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
-        ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                setState(() {});
-              })
-        ],
-        centerTitle: true,
-      ),
-      body: FutureBuilder(
+    print('Pedidos Page');
+
+    return RefreshIndicator(
+      onRefresh: _initFuturePedidos,
+      child: FutureBuilder(
         future: _futurePedidos,
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
             case ConnectionState.none:
-              return Center(
-                child: Container(
-                  width: 200.0,
-                  height: 200.0,
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).accentColor),
-                    strokeWidth: 5.0,
-                  ),
-                ),
-              );
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).accentColor),
+                strokeWidth: 5.0,
+              ),
+            );
             default:
               if (snapshot.hasError) {
                 return Container(
@@ -94,51 +77,6 @@ class _PedidosPageState extends State<PedidosPage> {
               }
           }
         },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
-        child: Container(
-            height: 45.0,
-            child: Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                        icon: Icon(Icons.home,
-                            color: Configuration.colorDefault2),
-                        onPressed: () {
-//                          Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return HomePage();
-                          }));
-                        }),
-                    IconButton(
-                        icon: Icon(Icons.favorite,
-                            color: Configuration.colorDefault2),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return FavoritosPage();
-                          }));
-                        }),
-                    IconButton(
-                        icon: Icon(Icons.list,
-                            color: Theme.of(context).accentColor),
-                        onPressed: () {
-                        }),
-                    IconButton(
-                        icon: Icon(Icons.account_circle,
-                            color: Configuration.colorDefault2),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return ClientePage();
-                          }));
-                        }),
-                  ],
-                ))),
       ),
     );
   }
