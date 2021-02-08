@@ -16,7 +16,6 @@ import 'package:appfastdelivery/ui/parceiros_page.dart';
 import 'package:provider/provider.dart';
 import 'cliente_page.dart';
 import 'package:appfastdelivery/ui/buscar_parceiro_page.dart';
-
 import 'favoritos_page.dart';
 
 class HomePage extends StatefulWidget {

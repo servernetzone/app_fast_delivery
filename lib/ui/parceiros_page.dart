@@ -241,7 +241,6 @@ class _ParceirosPageState extends State<ParceirosPage> {
                                         image: ImageUtil.loadWithRetry(
                                             parceiros[index]
                                                 .imagemBackground))),
-//
                                 child: Padding(
                                   padding:
                                       EdgeInsets.fromLTRB(120.0, 0.0, 0.0, 0.0),

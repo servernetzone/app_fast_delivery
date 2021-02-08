@@ -1,6 +1,6 @@
 import 'adicional.dart';
 
-class Variacao{
+class Variacao {
   final int id;
   final String descricao;
   final int maximo;
@@ -8,7 +8,8 @@ class Variacao{
   final bool ativo;
   final bool isMultiple;
   List<Adicional> adicionais;
+  String valorTotal;
 
-
-  Variacao(this.id, this.descricao, this.minimo, this.maximo, this.ativo, this.adicionais, this.isMultiple);
+  Variacao(this.id, this.descricao, this.minimo, this.maximo, this.ativo,
+      this.adicionais, this.isMultiple, this.valorTotal);
 }

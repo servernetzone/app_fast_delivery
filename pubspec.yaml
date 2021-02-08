@@ -14,8 +14,7 @@ description: A new Flutter application.
 
 #última versão lançada:1.0.9+17 -  códigos: arm = 17, arm64 = 18
 #Próxima versão: 1.0.10+19 -  códigos: arm = 19, arm64 = 20
-version: 1.0.13+26
-
+version: 1.0.14+27
 
 dependencies:
   flutter:

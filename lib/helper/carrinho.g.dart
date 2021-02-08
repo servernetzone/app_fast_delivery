@@ -36,7 +36,7 @@ Map<String, dynamic> _$ItemCarrinhoToJson(ItemCarrinho instance) =>
 
 AdicionalEscolhido _$AdicionalEscolhidoFromJson(Map<String, dynamic> json) {
   return AdicionalEscolhido(json['id'] as int, json['descricao'] as String,
-      json['descricaoVariacao'] as String, json['valor'] as String);
+      json['descricaoVariacao'] as String, json['valor'] as String, json['valorTotal'] as String);
 }
 
 Map<String, dynamic> _$AdicionalEscolhidoToJson(AdicionalEscolhido instance) =>

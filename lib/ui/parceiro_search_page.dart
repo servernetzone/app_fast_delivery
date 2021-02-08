@@ -7,14 +7,14 @@ import 'package:appfastdelivery/util/format_util.dart';
 import 'package:appfastdelivery/util/session.dart';
 
 
-
-
 class ParceiroSearchPage extends StatefulWidget {
 
   List<Parceiro> _parceiros;
-  ParceiroSearchPage(List<Parceiro> listaParceiros){
+
+  ParceiroSearchPage(List<Parceiro> listaParceiros) {
     _parceiros = listaParceiros;
   }
+
   @override
   _ParceiroSearchPageState createState() => _ParceiroSearchPageState();
 }
@@ -42,38 +42,43 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
         ),
         centerTitle: true,
       ),
-      body:  Center(child:Column(
+      body: Center(child: Column(
         children: <Widget>[
           Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme
+                      .of(context)
+                      .backgroundColor,
                   borderRadius: BorderRadius.circular(5.0)
               ),
               child:
               Container(
-                child:  TextField(
+                child: TextField(
                   controller: _BuscaController,
                   autofocus: true,
                   decoration: InputDecoration(
-                    icon: Icon(Icons.search,color: Colors.grey,),
+                    icon: Icon(Icons.search, color: Colors.grey,),
                     hintText: "Buscar Estabelecimentos",
                     hintStyle: TextStyle(fontSize: 13.0),
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     suffix: FlatButton(
 
-                      color: Theme.of(context).backgroundColor,
-                        child:Text("Voltar",style: TextStyle(color: Colors.red)),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
+                      color: Theme
+                          .of(context)
+                          .backgroundColor,
+                      child: Text("Voltar", style: TextStyle(color: Colors
+                          .red)),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ),
 //                  onTap: (){
 //                    print("Apareceu teclado");
 //                  },
-                  onChanged: (value){
-                   _buscaParceiros(value);
+                  onChanged: (value) {
+                    _buscaParceiros(value);
                   },
                 ),
               )
@@ -87,38 +92,46 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
       )),
     );
   }
-  void _buscaParceiros(String value){
-    if (value.length>=3){
+
+  void _buscaParceiros(String value) {
+    if (value.length >= 3) {
       List<Parceiro> _busca = List();
-      for (Parceiro p in _todosparceiros ){
-        if(FormatUtil.removeAcentos(p.nome).toUpperCase().contains(FormatUtil.removeAcentos(value).toUpperCase())){
+      for (Parceiro p in _todosparceiros) {
+        if (FormatUtil.removeAcentos(p.nome).toUpperCase().contains(
+            FormatUtil.removeAcentos(value).toUpperCase())) {
           _busca.add(p);
         }
       }
       setState(() {
         _parceirosbuscados = _busca;
       });
-    }else{
+    } else {
       //Caso exista parceiros na busca remove, caso contrario nao faz nada
-      if(_parceirosbuscados.length>0){
+      if (_parceirosbuscados.length > 0) {
         setState(() {
-        _parceirosbuscados.clear();
+          _parceirosbuscados.clear();
         });
       }
     }
   }
-  Widget _listScreen(BuildContext context){
-    if (_parceirosbuscados.length == 0){
+
+  Widget _listScreen(BuildContext context) {
+    if (_parceirosbuscados.length == 0) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(Icons.store,size: 80, color: Theme.of(context).accentColor,),
+          Icon(Icons.store, size: 80, color: Theme
+              .of(context)
+              .accentColor,),
           Padding(padding: EdgeInsets.all(10),
-            child: Text("Digite o nome do estabelecimento",style: TextStyle(color: Theme.of(context).accentColor,fontSize: 16)),
+            child: Text("Digite o nome do estabelecimento",
+                style: TextStyle(color: Theme
+                    .of(context)
+                    .accentColor, fontSize: 16)),
           ),
         ],
       );
-    }else{
+    } else {
       return Padding(
           padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
           child: ListView.builder(
@@ -139,8 +152,6 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ParceiroPage(_parceirosbuscados[index]);
                   }));
-
-
                 },
                 child: Card(
                     elevation: 5.0,
@@ -154,10 +165,10 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                           alignment: Alignment(-0.95, 1.0),
                           children: <Widget>[
                             Container(
-                              child:  Column(
+                              child: Column(
                                 children: <Widget>[
 //                                  SizedBox(height: 20.0,),
-                                  Container (
+                                  Container(
                                       height: 75.0,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.only(
@@ -168,18 +179,23 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                                                   Colors.black.withOpacity(0.7),
                                                   BlendMode.darken),
                                               fit: BoxFit.cover,
-                                              image: ImageUtil.loadWithRetry(_parceirosbuscados[index].imagemBackground))),
+                                              image: ImageUtil.loadWithRetry(
+                                                  _parceirosbuscados[index]
+                                                      .imagemBackground))),
 //
                                       child: Padding(
                                         padding: EdgeInsets.fromLTRB(
                                             120.0, 0.0, 0.0, 0.0),
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
                                           children: <Widget>[
 //
                                             Padding(
-                                              padding: EdgeInsets.only(top: 15.0),
+                                              padding: EdgeInsets.only(
+                                                  top: 15.0),
                                               child: Text(
                                                 _parceirosbuscados[index].nome,
                                                 style: TextStyle(
@@ -196,9 +212,11 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
 //
                                             Container(
                                                 child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisSize: MainAxisSize
+                                                      .max,
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   children: <Widget>[
                                                     Container(
                                                       child: Row(
@@ -207,15 +225,23 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
 //                                                              color: Colors.white,
                                                               size: 20.0),
                                                           Padding(
-                                                              padding: EdgeInsets.only(
+                                                              padding: EdgeInsets
+                                                                  .only(
                                                                   left: 3.0),
-                                                              child: Text(_parceirosbuscados[index].valoresEntrega.toString().replaceAll('.', ','),
+                                                              child: Text(
+                                                                _parceirosbuscados[index]
+                                                                    .valoresEntrega
+                                                                    .toString()
+                                                                    .replaceAll(
+                                                                    '.', ','),
                                                                 style: TextStyle(
                                                                     fontSize: 13.0,
-                                                                    color: Colors.white
+                                                                    color: Colors
+                                                                        .white
                                                                 ),
                                                                 textAlign:
-                                                                TextAlign.center,
+                                                                TextAlign
+                                                                    .center,
                                                               ))
                                                         ],
                                                       ),
@@ -226,11 +252,13 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                                                       style: TextStyle(
                                                           fontSize: 13.0,
                                                           color: Colors.white),
-                                                      textAlign: TextAlign.center,
+                                                      textAlign: TextAlign
+                                                          .center,
                                                     ),
                                                     Padding(
                                                       padding:
-                                                      EdgeInsets.only(right: 5.0),
+                                                      EdgeInsets.only(
+                                                          right: 5.0),
                                                       child: _verificarIconeCartao(
                                                           _parceirosbuscados[index]),
                                                     ),
@@ -243,17 +271,21 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                                   Container(
                                     height: 25.0,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start ,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .start,
                                       children: <Widget>[
                                         Padding(
-                                          padding: EdgeInsets.only(right: 10.0, left: 120.0),
+                                          padding: EdgeInsets.only(
+                                              right: 10.0, left: 120.0),
                                           child: Text(
-                                            _parceirosbuscados[index].situacao == true
+                                            _parceirosbuscados[index]
+                                                .situacao == true
                                                 ? 'ABERTO'
                                                 : 'FECHADO',
                                             style: TextStyle(
                                                 fontSize: 12.0,
-                                                color: _parceirosbuscados[index].situacao == true
+                                                color: _parceirosbuscados[index]
+                                                    .situacao == true
                                                     ? Configuration.colorGreen
                                                     : Configuration.colorRed,
                                                 fontWeight: FontWeight.bold),
@@ -269,7 +301,8 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                             Card(
                               elevation: 5.0,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(10.0))
                               ),
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: Container(
@@ -284,7 +317,9 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
                                     ),
                                     shape: BoxShape.rectangle,
                                     image: DecorationImage(
-                                        image: ImageUtil.loadWithRetry(_parceirosbuscados[index].imagemLogo),
+                                        image: ImageUtil.loadWithRetry(
+                                            _parceirosbuscados[index]
+                                                .imagemLogo),
                                         fit: BoxFit.cover)),
                               ),
                             )
@@ -295,12 +330,12 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
               );
             },
           )
-      );}
+      );
+    }
   }
 
-  Widget _verificarIconeCartao(Parceiro _parceiro){
-
-    if(_parceiro.isCartao){
+  Widget _verificarIconeCartao(Parceiro _parceiro) {
+    if (_parceiro.isCartao) {
       return Icon(Icons.credit_card, color: Colors.white, size: 20.0);
     }
   }
@@ -343,7 +378,6 @@ class _ParceiroSearchPageState extends State<ParceiroSearchPage> {
       );
     }
   }
-
 
 
 }

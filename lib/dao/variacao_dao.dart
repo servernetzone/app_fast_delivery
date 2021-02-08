@@ -7,16 +7,12 @@ import 'package:appfastdelivery/helper/variacao.dart';
 
 import 'singleton.dart';
 
-
-class VariacaoDao{
-
+class VariacaoDao {
   static final VariacaoDao _instance = VariacaoDao.internal();
+
   factory VariacaoDao() => _instance;
+
   VariacaoDao.internal();
-
-
-
-
 
 //  Future<List<Variacao>> list(int id) async {
 ////    print(id);
@@ -38,7 +34,9 @@ class VariacaoDao{
 
   Future<List<Variacao>> list(int id) async {
 //    print(id);
-    var data = await http.get((Factory.internal().getUrl()+'produtos/$id/variacoes/'), headers: {'Accept': 'application/json'});
+    var data = await http.get(
+        (Factory.internal().getUrl() + 'produtos/$id/variacoes/'),
+        headers: {'Accept': 'application/json'});
     var jsonDataList = json.decode(utf8.decode(data.bodyBytes));
     List<Variacao> variacoes = List();
 
@@ -46,29 +44,31 @@ class VariacaoDao{
     for (var jsonData in jsonDataList) {
       List<Adicional> adicionais = [];
 
-      for(var jsonDataAdicionais in jsonData['adicionais']){
+      for (var jsonDataAdicionais in jsonData['adicionais']) {
 //      print(jsonDataAdicionais['descricao']);
-       if(jsonDataAdicionais['status'] == 'Ativo'){
-         Adicional adicional = Adicional(
-             jsonDataAdicionais['pk'],
-             jsonDataAdicionais['descricao'],
-             jsonDataAdicionais['status'],
-             jsonDataAdicionais['valor'],
-             jsonDataAdicionais['getpreco']
-         );
-         adicionais.add(adicional);
-       }
+        if (jsonDataAdicionais['status'] == 'Ativo') {
+          Adicional adicional = Adicional(
+              jsonDataAdicionais['pk'],
+              jsonDataAdicionais['descricao'],
+              jsonDataAdicionais['status'],
+              jsonDataAdicionais['valor'],
+              jsonDataAdicionais['getpreco']);
+          adicionais.add(adicional);
+        }
       }
 //    print("printouuuuu: "+jsonData['adicionais']);
 
-      Variacao variacao = Variacao(jsonData['pk'], jsonData['descricao'], jsonData['min'], jsonData['max'], jsonData['ativo'], adicionais, jsonData['isMultiple']);
+      Variacao variacao = Variacao(
+          jsonData['pk'],
+          jsonData['descricao'],
+          jsonData['min'],
+          jsonData['max'],
+          jsonData['ativo'],
+          adicionais,
+          jsonData['isMultiple'],
+          jsonData['valorTotal']);
       variacoes.add(variacao);
     }
     return variacoes;
   }
-
-
-
-
-
 }

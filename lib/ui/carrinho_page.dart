@@ -111,12 +111,13 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             fontWeight: FontWeight.bold)),
                     Icon(
                       Icons.arrow_forward,
-                      color: Theme .of(context).backgroundColor,
+                      color: Theme.of(context).backgroundColor,
                       size: 18.0,
                     )
                   ]),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
                   return EnderecoPage();
                 }));
               }),
@@ -124,7 +125,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
       ));
     }
   }
-
 
   Widget _screenMain() {
     if (_itens.isEmpty) {
@@ -163,8 +163,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                   itemCount: _itens.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                        child: _screenListTile(context, index)
-                    );
+                        child: _screenListTile(context, index));
                   }))
         ],
       );
@@ -228,7 +227,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                       children: _preencher(_itens[index]),
                     ),
                   ),
-
                   _screenObservacao(_itens[index]),
                 ],
               ),
@@ -314,8 +312,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
               trailing: Container(
                   child: Column(
                 children: <Widget>[
-                  Text(
-                      "R\$ ${FormatUtil.doubleToPrice(_itens[index].valor)}",
+                  Text("R\$ ${FormatUtil.doubleToPrice(_itens[index].valor)}",
                       style: TextStyle(
                           fontSize: 11.0,
                           color: Color.fromRGBO(100, 100, 143, 1.0))),
@@ -330,7 +327,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
               )),
 //              dense: true,
             ),
-
             Container(
               padding: EdgeInsets.only(left: 25.0, right: 25.0),
               child: Column(
@@ -338,7 +334,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                 children: _preencher(_itens[index]),
               ),
             ),
-
             _screenObservacao(_itens[index]),
           ],
         ),
@@ -350,124 +345,113 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
 
   Widget _screenObservacao(ItemCarrinho itemCarrinho) {
     if (itemCarrinho.observacao != "") {
-      return Padding(padding: EdgeInsets.only(bottom: 3.0),
-         child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: <Widget>[
-
-               Container(
-                 margin: EdgeInsets.only(left: 25.0),
-                 color: Color.fromRGBO(36, 36, 143, 0.2),
-                 alignment: Alignment.centerLeft,
-                 child: Text(
-                   "Obs: ${itemCarrinho.observacao}",
-                   style: TextStyle(
-                       color: Color.fromRGBO(36, 36, 143, 1.0), fontSize: 10.0),
-                 ),
-               ),
-
-
-               Container(
-                 margin: EdgeInsets.only(right: 0.0),
-                 child:
-                 FlatButton(
-                   padding: EdgeInsets.all(0.0),
-                     child: Column(
-                       children: <Widget>[
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: <Widget>[
-                             Text('${itemCarrinho.quantidade}',
-                               style: TextStyle(
-                                   fontSize: 12.0,
-                                   fontWeight: FontWeight.bold,
-                                   color: Color.fromRGBO(36, 36, 143, 1.0)
-                               ),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(left: 7.0),
-                               child: Icon(Icons.navigate_next,
-                                 color: Color.fromRGBO(36, 36, 143, 0.2),
-                                 size: 16.0,
-                               ),
-                             ),
-                           ],
-                         ),
-
-                         Text('Quantidade',
-                           style: TextStyle(
-                               fontSize: 10.0,
-                               fontWeight: FontWeight.bold,
-                               color: Color.fromRGBO(36, 36, 143, 0.4)
-                           ),
-                         ),
-
-                       ],
-                     ),
-                   onPressed: (){
-                     _screenSelect(itemCarrinho);
-                   },
-                 ),
-               )
-
-
-             ],
-           ),
-
-       );
-    }
-    return Padding(padding: EdgeInsets.only(bottom: 3.0),
+      return Padding(
+        padding: EdgeInsets.only(bottom: 3.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
+              margin: EdgeInsets.only(left: 25.0),
+              color: Color.fromRGBO(36, 36, 143, 0.2),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Obs: ${itemCarrinho.observacao}",
+                style: TextStyle(
+                    color: Color.fromRGBO(36, 36, 143, 1.0), fontSize: 10.0),
+              ),
+            ),
+            Container(
               margin: EdgeInsets.only(right: 0.0),
-              child:
-              FlatButton(
+              child: FlatButton(
                 padding: EdgeInsets.all(0.0),
                 child: Column(
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${itemCarrinho.quantidade}',
+                        Text(
+                          '${itemCarrinho.quantidade}',
                           style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(36, 36, 143, 1.0)
-                          ),
+                              color: Color.fromRGBO(36, 36, 143, 1.0)),
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 7.0),
-                          child: Icon(Icons.navigate_next,
+                          child: Icon(
+                            Icons.navigate_next,
                             color: Color.fromRGBO(36, 36, 143, 0.2),
                             size: 16.0,
                           ),
                         ),
                       ],
                     ),
-
-                    Text('Quantidade',
+                    Text(
+                      'Quantidade',
                       style: TextStyle(
                           fontSize: 10.0,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(36, 36, 143, 0.4)
-                      ),
+                          color: Color.fromRGBO(36, 36, 143, 0.4)),
                     ),
-
                   ],
                 ),
-                onPressed: (){
+                onPressed: () {
                   _screenSelect(itemCarrinho);
                 },
               ),
             )
-
-
           ],
         ),
-
       );
+    }
+    return Padding(
+      padding: EdgeInsets.only(bottom: 3.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(right: 0.0),
+            child: FlatButton(
+              padding: EdgeInsets.all(0.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        '${itemCarrinho.quantidade}',
+                        style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(36, 36, 143, 1.0)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 7.0),
+                        child: Icon(
+                          Icons.navigate_next,
+                          color: Color.fromRGBO(36, 36, 143, 0.2),
+                          size: 16.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Quantidade',
+                    style: TextStyle(
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(36, 36, 143, 0.4)),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                _screenSelect(itemCarrinho);
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   List<Widget> _preencher(ItemCarrinho itemCarrinho) {
@@ -500,191 +484,180 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
 
   double _calcularValorTotal() {
     double valorTotal = 0.00;
+    
     for (ItemCarrinho itemCarrinho in _itens) {
+     
       valorTotal += _calcularValor(itemCarrinho.valor, itemCarrinho.quantidade);
     }
     return valorTotal;
   }
 
-  String _obterQuantidade(){
+  String _obterQuantidade() {
     int quantidade = 0;
-    for(ItemCarrinho itemCarrinho in _itens){
+    for (ItemCarrinho itemCarrinho in _itens) {
       quantidade += itemCarrinho.quantidade;
     }
 
-    if(quantidade > 1){
+    if (quantidade > 1) {
       return '$quantidade produtos';
-    }else{
+    } else {
       return '$quantidade produto';
     }
   }
 
-  _screenSelect (ItemCarrinho itemCarrinho) async{
+  _screenSelect(ItemCarrinho itemCarrinho) async {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return
-            Container(
-                padding: EdgeInsets.only(top: 0.0, bottom: 0.0),
-                color: Color.fromRGBO(36, 36, 143, 0.9),
-                child:
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        width: 260.0,
-                        height: 50.0,
-                        child: FlatButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text('Quantidade',
-                                style: TextStyle(
-                                    color:  Color.fromRGBO(36, 36, 143, 1.0),
-                                    fontSize: 15.0
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(230, 230, 230, 1.0),
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0),
-                              topRight: Radius.circular(5.0)),
-                        ),
-                      ),
-                      Container(
-                          width: 260.0,
-                          height: 300.0,
-                          color: Colors.white,
-                          child:
-                          Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: ListView(
-                                  children: _listScreenSelect(itemCarrinho),
-                                ),
-                              ),
-                            ],
+          return Container(
+            padding: EdgeInsets.only(top: 0.0, bottom: 0.0),
+            color: Color.fromRGBO(36, 36, 143, 0.9),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 260.0,
+                    height: 50.0,
+                    child: FlatButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Quantidade',
+                            style: TextStyle(
+                                color: Color.fromRGBO(36, 36, 143, 1.0),
+                                fontSize: 15.0),
                           )
+                        ],
                       ),
-                      Container(
-                        width: 260.0,
-                        height: 50.0,
-                        child: FlatButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.delete,
-                                color: Color.fromRGBO(185, 0, 0, 1.0),
-                                size: 16.0,
-                              ),
-                              Text('Remover produto',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(185, 0, 0, 1.0),
-                                    fontSize: 12.0
-                                ),
-                              )
-                            ],
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(230, 230, 230, 1.0),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5.0),
+                          topRight: Radius.circular(5.0)),
+                    ),
+                  ),
+                  Container(
+                      width: 260.0,
+                      height: 300.0,
+                      color: Colors.white,
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            child: ListView(
+                              children: _listScreenSelect(itemCarrinho),
+                            ),
                           ),
-                          onPressed: (){
-                            List<Widget> actions = List();
-                            actions.add(FlatButton(
-                              child: Text(
-                                'NÃO',
-                                style: TextStyle(color: Color.fromRGBO(0, 153, 51, 1.0)),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ));
-                            actions.add(FlatButton(
-                              child: Text('SIM',
-                                  style:
-                                  TextStyle(color: Color.fromRGBO(0, 153, 51, 1.0))),
-                              onPressed: () {
-                                setState(() {
-                                  _itens.remove(itemCarrinho);
-                                  Session.getPersistence().save(_itens, Session.getIdParceiro());
-                                  Session.setListaItens(_itens);
-                                });
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              },
-                            ));
+                        ],
+                      )),
+                  Container(
+                    width: 260.0,
+                    height: 50.0,
+                    child: FlatButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.delete,
+                            color: Color.fromRGBO(185, 0, 0, 1.0),
+                            size: 16.0,
+                          ),
+                          Text(
+                            'Remover produto',
+                            style: TextStyle(
+                                color: Color.fromRGBO(185, 0, 0, 1.0),
+                                fontSize: 12.0),
+                          )
+                        ],
+                      ),
+                      onPressed: () {
+                        List<Widget> actions = List();
+                        actions.add(FlatButton(
+                          child: Text(
+                            'NÃO',
+                            style: TextStyle(
+                                color: Color.fromRGBO(0, 153, 51, 1.0)),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ));
+                        actions.add(FlatButton(
+                          child: Text('SIM',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(0, 153, 51, 1.0))),
+                          onPressed: () {
+                            setState(() {
+                              _itens.remove(itemCarrinho);
+                              Session.getPersistence()
+                                  .save(_itens, Session.getIdParceiro());
+                              Session.setListaItens(_itens);
+                            });
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        ));
 
-                            MessageUtil.alertMessageScreen(
-                                context,
-                                'Quer mesmo remover o produto?',
-                                '${itemCarrinho.quantidade}x ${itemCarrinho.descricaoProduto}',
-                                actions);
+                        MessageUtil.alertMessageScreen(
+                            context,
+                            'Quer mesmo remover o produto?',
+                            '${itemCarrinho.quantidade}x ${itemCarrinho.descricaoProduto}',
+                            actions);
 //
 //                            Session.setListaItens(_itens);
 //                            Session.getPersistence().save(_itens, Session.getIdParceiro());
 //                            Navigator.of(context).pop();
-                          },),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(230, 230, 230, 1.0),
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0),
-                              bottomRight: Radius.circular(5.0)),
+                      },
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(230, 230, 230, 1.0),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(5.0),
+                          bottomRight: Radius.circular(5.0)),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10.0),
+                    width: 220.0,
+                    child: OutlineButton(
+                        child: Text("Fechar",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0)),
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(200, 200, 200, 1.0),
                         ),
-                      ),
-
-
-                      Container(
-                        margin: EdgeInsets.only(top: 10.0),
-                        width: 220.0,
-                        child:
-                        OutlineButton(
-                            child: Text("Fechar",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.0)),
-                            borderSide: BorderSide(
-                              color: Color.fromRGBO(200, 200, 200, 1.0),
-
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                            onPressed: () {
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                        onPressed: () {
 //                            setState(() {
 //                              _quantidade = 1;
 //                            });
-                              Navigator.pop(context);
-
-                            }
-                        ),
-                      )
-
-
-
-
-                    ],
-                  ),
-                ),
-
-            );
-
-        }
-    );
+                          Navigator.pop(context);
+                        }),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
-
-  List<Widget> _listScreenSelect(ItemCarrinho itemCarrinho){
+  List<Widget> _listScreenSelect(ItemCarrinho itemCarrinho) {
     List<Widget> listSelect = List();
-    for(int i = 1; i <= 50; i++){
+    for (int i = 1; i <= 50; i++) {
       listSelect.add(
         FlatButton(
-          child: Text('$i', textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 17.0,
-                fontWeight: FontWeight.bold
-            ),
+          child: Text(
+            '$i',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
           ),
           onPressed: () {
             setState(() {
